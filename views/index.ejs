@@ -33,18 +33,21 @@
         var socket = io();
         $('form').submit(function () {
             var msg = $('#message').val();
-
             console.log('msg', msg)
-            if (msg.length > 0)
+            if (msg.trim())
                 socket.emit('chatter', msg);
             else
-                console.log("Enter a valid msg :)");
+                alert("Enter a valid msg >:(");
             $('#message').val("");
             return false;
         });
         socket.on('chatter', function (msg) {
-            console.log('chatter', msg)
-            $("#chatWindow").append('<li class="list-group-item">' + msg + '</li>');
+            let text = document.createTextNode(msg);
+            let li = document.createElement("li");
+            
+            li.appendChild(text);
+            li.setAttribute("class","list-group-item");
+            document.getElementById("chatWindow").appendChild(li);
         });
     </script>
 </body>
